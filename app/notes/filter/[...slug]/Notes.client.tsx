@@ -9,7 +9,11 @@ import Pagination from "@/components/Pagination/Pagination";
 import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
 
-export default function NotesClient() {
+type Props = {
+  tag?: string;
+};
+
+export default function NotesClient({ tag }: Props) {
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -17,15 +21,15 @@ export default function NotesClient() {
   const [debouncedSearch] = useDebounce(search, 500);
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["notes", page, debouncedSearch],
-    queryFn: () => fetchNotes({ page, search: debouncedSearch }),
+    queryKey: ["notes", page, debouncedSearch, tag],
+    queryFn: () => fetchNotes({ page, search: debouncedSearch, tag }),
     placeholderData: keepPreviousData,
   });
 
   return (
     <>
       {isLoading && <p>Loading...</p>}
-      {isError && <p>Error</p>}
+      {isError && <p>Error loading notes. Please try again.r</p>}
 
       <SearchBox
         search={search}
