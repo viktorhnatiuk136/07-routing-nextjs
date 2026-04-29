@@ -29,7 +29,7 @@ export default function NotesClient({ tag }: Props) {
   return (
     <>
       {isLoading && <p>Loading...</p>}
-      {isError && <p>Error loading notes. Please try again.r</p>}
+      {isError && <p>Error loading notes. Please try again.</p>}
 
       <SearchBox
         search={search}
