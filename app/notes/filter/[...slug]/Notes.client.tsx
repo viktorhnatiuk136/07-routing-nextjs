@@ -45,7 +45,7 @@ export default function NotesClient({ tag }: Props) {
       />
       <button onClick={() => setIsModalOpen(true)}>Create note</button>
 
-      <NoteList notes={data?.notes || []} />
+      {data?.notes?.length ? <NoteList notes={data.notes} /> : null}
 
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
