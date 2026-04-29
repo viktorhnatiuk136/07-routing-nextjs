@@ -11,6 +11,7 @@ export interface NoteHTTPResponse {
 interface FetchNotesParams {
   page: number;
   search: string;
+  tag?: string;
 }
 
 axios.defaults.baseURL = "https://notehub-public.goit.study/api";
@@ -19,18 +20,13 @@ const TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 export async function fetchNotes({
   page,
   search,
+  tag,
 }: FetchNotesParams): Promise<NoteHTTPResponse> {
-  try {
-    const res = await axios.get<NoteHTTPResponse>("/notes", {
-      params: { page, search },
-      headers: { Authorization: `Bearer ${TOKEN}` },
-    });
-
-    return res.data;
-  } catch (error) {
-    toast.error("Failed to fetch notes");
-    throw error;
-  }
+  const res = await axios.get<NoteHTTPResponse>("/notes", {
+    params: { page, search, tag },
+    headers: { Authorization: `Bearer ${TOKEN}` },
+  });
+  return res.data;
 }
 
 interface CreateNoteRequest {
